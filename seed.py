@@ -9,4 +9,3 @@ def seed_db(app):
         user = User()
         db.session.add(user)
     db.session.commit()
-    
