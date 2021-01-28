@@ -9,6 +9,20 @@
 <body>
     
     <h1>{% block title %}{% endblock title %}</h1>
+    {% block logged_in %}{% endblock logged_in %}
+
+    {% block errors %}
+        {% with messages = get_flashed_messages() %}
+
+            {% for message in messages %}
+            
+                <p class="alert alert-danger">{{message}}</p>
+                
+            {% endfor %}
+
+        {% endwith %}
+    {% endblock errors %}
+    
 
     <div class=container>
         {% block form %}

@@ -6,6 +6,10 @@ Register
 
 {% endblock title %}
 
+{% block logged_in %}
+<a href="/login" class="btn btn-success">Login</a>
+{% endblock logged_in %}
+
 {% block form %}
     <form action="/register" method="POST">
 
@@ -24,5 +28,6 @@ Register
             </div>
         
         {% endfor %}
+        <input type="submit" value="Register" class="btn btn-success">
     </form>
 {% endblock form %}

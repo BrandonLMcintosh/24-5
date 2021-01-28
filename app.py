@@ -1,6 +1,6 @@
 from forms import Login_Form
 from flask import Flask, request, redirect, jsonify, render_template, flash, session
-from models import User
+from models import User, connect_db, db
 from secret_key import secret_key
 from seed import seed_db
 from forms import Login_Form, Register_Form
@@ -11,16 +11,27 @@ app.config['SECRET_KEY'] = secret_key
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres:///feedback'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-seed_db(app)
+connect_db(app)
+
+@app.before_first_request
+def resetDB():
+
+    db.drop_all()
+    db.create_all()
+
+    seed_db(app)
+
 
 @app.route('/')
 def index():
+
     return redirect('/register')
+
 
 @app.route('/register', methods = ["GET", "POST"])
 def register():
 
-    form = Login_Form()
+    form = Register_Form()
 
     if request.method == "GET":
 
@@ -49,6 +60,7 @@ def register():
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
+
     form = Login_Form()
 
     if request.method == "GET":
@@ -75,7 +87,24 @@ def login():
 
         return redirect('/login')
 
+
+@app.route('/logout')
+def logout():
+
+    del session['username']
+
+    return redirect('/login')
+
+
 @app.route('/secret')
 def secret():
-    
-    return render_template('secret.html.j2')
+
+    if User.is_authenticated():
+
+        return render_template('secret.html.j2')
+        
+    else: 
+
+        flash('You need to be logged in to view that page')
+
+        return redirect('/login')

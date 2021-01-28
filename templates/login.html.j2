@@ -6,6 +6,10 @@ Login
 
 {% endblock title %}
 
+{% block logged_in %}
+<a href="/register" class="btn btn-success">Register</a>
+{% endblock logged_in %}
+
 {% block form %}
     <form action="/login" method="POST">
 
@@ -22,7 +26,7 @@ Login
                     {{error}}
                 {% endfor %}
             </div>
-        
         {% endfor %}
+        <input type="submit" value="Login" class="btn btn-success">
     </form>
 {% endblock form %}

@@ -5,12 +5,12 @@ from wtforms.fields.simple import PasswordField
 from wtforms.validators import Email, InputRequired, Length
 
 class Login_Form(FlaskForm):
-    email = EmailField(validators=[Email(), InputRequired(), Length(max=50)])
+    email = EmailField(validators=[InputRequired(), Length(max=50)])
     password = PasswordField(validators=[InputRequired()])
 
 class Register_Form(FlaskForm):
-    email = EmailField(validators=[Email(), InputRequired(), Length(max=50)])
-    username = StringField(validators=[Length(20), InputRequired()])
+    email = EmailField(validators=[InputRequired(), Length(max=50)])
+    username = StringField(validators=[Length(max=20), InputRequired()])
     password = StringField(validators=[InputRequired()])
-    first_name = StringField(validators=[Length(30), InputRequired()])
-    last_name = StringField(validators=[Length(30), InputRequired()])
+    first_name = StringField(validators=[Length(max=30), InputRequired()])
+    last_name = StringField(validators=[Length(max=30), InputRequired()])
