@@ -1,9 +1,9 @@
-from forms import Login_Form
+from forms import Feedback_Form, Login_Form
 from flask import Flask, request, redirect, jsonify, render_template, flash, session
-from models import User, connect_db, db
+from models import User, Feedback, connect_db, db
 from secret_key import secret_key
 from seed import seed_db
-from forms import Login_Form, Register_Form
+from forms import Login_Form, Register_Form, Feedback_Form
 
 app = Flask(__name__)
 
@@ -114,3 +114,50 @@ def secret():
         flash('You need to be logged in to view that page')
 
         return redirect('/login')
+
+
+@app.route('/users/<username>')
+def feedback_add(username):
+
+    if User.is_authenticated():
+
+        
+
+        return render_template('feedback/add.html.j2')
+    
+    elif request.method == "POST":
+
+        if form.validate_on_submit():
+
+            Feedback.add(username, form=form)
+            
+            return redirect(f'/user/{username}')
+
+        else: 
+            
+            flash('Please correct any errors in this form')
+
+            return render_template('feedback/add.html.j2', form=form, username=username)
+    
+    else: 
+
+        flash("something went wrong")
+
+        return redirect(f'/user/{username}')
+
+
+@app.route('/user/<username>/delete')
+def feedback_update(username):
+
+    if User.is_authenticated() and session['username'] == username:
+
+        User.delete(username)
+
+        return redirect('/register')
+
+    else:
+
+        flash('You must be logged in to do this.')
+
+        return redirect('/login')
+        

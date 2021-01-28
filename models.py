@@ -10,6 +10,7 @@ def connect_db(app):
     db.app = app
     db.init_app(app)
 
+
 class User(db.Model):
 
     __tablename__ = "users"
@@ -123,12 +124,14 @@ class User(db.Model):
 
             return False
 
+
     @staticmethod
     def is_authenticated():
         if 'username' in session:
             return True
         else:
             return False
+
 
     @classmethod
     def logout(cls):
@@ -138,6 +141,23 @@ class User(db.Model):
         return {
             "logged_out": True
         }
+
+
+    @classmethod
+    def delete(cls, username):
+
+        user = cls.get(username)
+
+        db.session.delete(user)
+        db.session.commit()
+
+
+    @classmethod
+    def get(cls, username):
+
+        user = cls.query.filter_by(username=username).first()
+
+        return user
 
 class Feedback(db.Model):
 
@@ -155,5 +175,47 @@ class Feedback(db.Model):
         title = db.Column(db.String(100), nullable=False)
         content = db.Column(db.Text, nullable=False)
         username = db.relationship('User', backref='feedback')
+
+    @classmethod
+    def add(cls, username, form=None, title=None, content=None):
+
+        if form:
+
+            feedback = cls(title=form.title.data, content=form.content.data, username=username)
+        
+        else:
+
+            feedback = cls(title=form.title.data, content=form.content.data, username=username)
+
+        db.session.add(feedback)
+        db.session.commit()
+
+
+    @classmethod
+    def update(cls, username, form_id, form=None, title=None, content=None):
+
+        feedback = cls.query.get_or_404(form_id)
+        
+        if form:
+
+            feedback.title=form.title.data
+            feedback.content=form.content.data
+        
+        else:
+
+            feedback.title=title
+            feedback.content=content
+        
+        db.session.add(feedback)
+        db.session.commit()
+
+    
+    @classmethod
+    def delete(cls, id):
+
+        feedback = cls.query.get_or_404(id)
+
+        db.session.delete(feedback)
+        db.session.commit()
 
         
