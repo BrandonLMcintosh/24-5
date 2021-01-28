@@ -1,4 +1,4 @@
-{% extends "base.html.j2" %}
+{% extends "root/base.html.j2" %}
 
 {% block title %}
 
@@ -6,9 +6,9 @@ Register
 
 {% endblock title %}
 
-{% block logged_in %}
+{% block nav %}
 <a href="/login" class="btn btn-success">Login</a>
-{% endblock logged_in %}
+{% endblock nav %}
 
 {% block form %}
     <form action="/register" method="POST">

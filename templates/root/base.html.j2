@@ -9,7 +9,7 @@
 <body>
     
     <h1>{% block title %}{% endblock title %}</h1>
-    {% block logged_in %}{% endblock logged_in %}
+    {% block nav %}{% endblock nav %}
 
     {% block errors %}
         {% with messages = get_flashed_messages() %}
@@ -31,11 +31,9 @@
     </div>
 
     <div class="container">
-        {% block secret %}
+        {% block feedback %}
         
-        {% endblock secret %}
+        {% endblock feedback %}
     </div>
-    
-
 </body>
 </html>

@@ -1,17 +1,37 @@
-{% extends "base.html.j2" %}
+{% extends "root/base.html.j2" %}
 
 {% block title %}
 
-    {{user.name}}
+    {{user.username}}
 
 {% endblock title %}
 
-{% block logged_in %}
-<a href="/logout" class="btn btn-secondary">Logout</a>
-{% endblock logged_in %}
+{% block nav %}
+<a href="/users/{{user.username}}/feedback/add" class="btn btn-success">Give Feedback</a>
+<a href="/logout" class="btn btn-secondary" class="btn btn-secondary">Logout</a>
+<a href="/users/{{user.username}}/delete" class="btn btn-danger" id="delete-account">Delete account</a>
+{% endblock nav %}
 
-{% block secret %}
+{% block feedback %}
 
-<p>You made it!</p>
+    <div class="container">
 
-{% endblock secret %}
+        {% for feedback in user.feedbacks %}
+
+            <div class="container row">
+                <div class="col">
+                    <h3>{{feedback.title}}</h3>
+                    <p>{{feedback.content}}</p>
+                </div>
+                <div class="col">
+                    <a href="/feedback/{{feedback.id}}/update" class="btn btn-warning">Update</a>
+                    <a href="/feedback/{{feedback.id}}/delete" class="btn btn-danger" id="delete-feedback">Delete</a>
+                </div>
+                
+                <hr>
+
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock feedback %}

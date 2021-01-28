@@ -1,0 +1,32 @@
+{% extends "root/base.html.j2" %}
+
+{% block title %}
+
+Login
+
+{% endblock title %}
+
+{% block nav %}
+<a href="/register" class="btn btn-success">Register</a>
+{% endblock nav %}
+
+{% block form %}
+    <form action="/login" method="POST">
+
+        {{ form.hidden_tag() }}
+
+        {% for field in form
+            if field.widget.input_type != 'hidden' %}
+
+            <div>
+                {{field.label}}
+                {{field}}
+
+                {% for error in field.errors %}
+                    {{error}}
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <input type="submit" value="Login" class="btn btn-success">
+    </form>
+{% endblock form %}

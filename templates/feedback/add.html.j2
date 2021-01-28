@@ -1,17 +1,21 @@
-{% extends "base.html.j2" %}
+{% extends "root/base.html.j2" %}
 
 {% block title %}
 
-Login
+    Update feedback
 
 {% endblock title %}
 
-{% block logged_in %}
-<a href="/register" class="btn btn-success">Register</a>
-{% endblock logged_in %}
+{% block nav %}
+
+<a href="/logout" class="btn btn-secondary">Logout</a>
+<a href="{{request.referrer}}" class="btn btn-primary">Back / Cancel</a>
+
+{% endblock nav %}
 
 {% block form %}
-    <form action="/login" method="POST">
+
+    <form action="/users/{{username}}/feedback/add" method="POST">
 
         {{ form.hidden_tag() }}
 
@@ -27,6 +31,10 @@ Login
                 {% endfor %}
             </div>
         {% endfor %}
-        <input type="submit" value="Login" class="btn btn-success">
+        <input type="submit" value="Add" class="btn btn-success">
     </form>
+
 {% endblock form %}
+
+
+
