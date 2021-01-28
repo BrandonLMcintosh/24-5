@@ -71,9 +71,15 @@ def login():
 
         if form.validate_on_submit():
 
-            User.login(form)
-
-            return redirect('/secret')
+            response = User.login(form)
+            if response:
+                
+                return redirect('/secret')
+            
+            else: 
+                
+                flash("Bad username / Password")
+                return redirect('/login')
 
         else:
             

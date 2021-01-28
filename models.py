@@ -113,21 +113,15 @@ class User(db.Model):
 
         user = cls.query.filter_by(email=form.email.data).first()
 
-        if bcrypt.check_password_hash(user.password, cls.encode_password(form.password.data)):
+        if user and bcrypt.check_password_hash(user.password, cls.encode_password(form.password.data)):
 
             session['username'] = user.username
 
-            return {
-
-                'logged_in': user.dict_version
-            }
+            return True
 
         else:
 
-            return {
-
-                "error": "Bad username/password"
-            }
+            return False
 
     @staticmethod
     def is_authenticated():
