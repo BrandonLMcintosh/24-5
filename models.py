@@ -138,3 +138,22 @@ class User(db.Model):
         return {
             "logged_out": True
         }
+
+class Feedback(db.Model):
+
+    __tablename__ = "feedback"
+
+    def __repr__(self):
+        representation = f"""
+            ID: {self.id}, 
+            Title: {self.title},
+            Content: {self.content},
+            Username: {self.username}
+        """
+
+        id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
+        title = db.Column(db.String(100), nullable=False)
+        content = db.Column(db.Text, nullable=False)
+        username = db.relationship('User', backref='feedback')
+
+        

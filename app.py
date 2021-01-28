@@ -102,7 +102,7 @@ def logout():
     return redirect('/login')
 
 
-@app.route('/secret')
+@app.route('/users/<username>')
 def secret():
 
     if User.is_authenticated():

@@ -1,0 +1,17 @@
+{% extends "base.html.j2" %}
+
+{% block title %}
+
+    {{user.name}}
+
+{% endblock title %}
+
+{% block logged_in %}
+<a href="/logout" class="btn btn-secondary">Logout</a>
+{% endblock logged_in %}
+
+{% block secret %}
+
+<p>You made it!</p>
+
+{% endblock secret %}
